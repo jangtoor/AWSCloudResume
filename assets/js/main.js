@@ -121,38 +121,3 @@
 				});
 
 })(jQuery);
-
-/* =========================
-   Visitor Counter (Lambda)
-   ========================= */
-
-// ✅ Replace with your Lambda Function URL:
-const VISITOR_FUNCTION_URL = "YOUR_FUNCTION_URL_HERE";
-// Example: https://abcde12345.lambda-url.us-east-1.on.aws/
-
-async function updateVisitorCount() {
-  const el = document.getElementById("visitor-count");
-  if (!el) return;
-
-  try {
-    const res = await fetch(VISITOR_FUNCTION_URL, { method: "GET" });
-
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-    const data = await res.json();
-
-    // expecting: { "count": number }
-    if (typeof data.count === "number") {
-      el.textContent = data.count;
-    } else {
-      el.textContent = "N/A";
-      console.error("Unexpected response:", data);
-    }
-  } catch (err) {
-    el.textContent = "Error";
-    console.error("Visitor counter error:", err);
-  }
-}
-
-// Run after everything is loaded
-window.addEventListener("load", updateVisitorCount);

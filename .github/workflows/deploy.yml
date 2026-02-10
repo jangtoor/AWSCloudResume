@@ -20,7 +20,14 @@ jobs:
           aws-region: us-east-1
 
       - name: Sync files to S3
-        run: aws s3 sync . s3://jang-cloud-resume-challenge --delete --exclude ".git/*" --exclude ".github/*" --exclude "README.md"
+        run: |
+          aws s3 sync . s3://jang-cloud-resume-challenge --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude "infra/*" \
+            --exclude ".vscode/*" \
+            --exclude "README.*" \
+            --exclude "LICENSE*"
 
       - name: Invalidate CloudFront cache
         run: aws cloudfront create-invalidation --distribution-id E3QDB3PL9QNBCI --paths "/*"

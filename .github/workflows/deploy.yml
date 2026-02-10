@@ -24,10 +24,10 @@ jobs:
           aws s3 sync . s3://jang-cloud-resume-challenge --delete \
             --exclude ".git/*" \
             --exclude ".github/*" \
-            --exclude "infra/*" \
             --exclude ".vscode/*" \
+            --exclude "infra/*" \
             --exclude "README.*" \
             --exclude "LICENSE*"
 
-      - name: Invalidate CloudFront cache
-        run: aws cloudfront create-invalidation --distribution-id E3QDB3PL9QNBCI --paths "/*"
+      - name: Invalidate CloudFront cache (optional)
+        run: aws cloudfront create-invalidation --distribution-id E3QDB3PL9QNBCI --paths "/*" || true
